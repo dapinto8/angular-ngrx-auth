@@ -1,1 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body {
+    font-family: quicksand, sans-serif;
+    color: #212121;
+}
+
+h1, h2, h3, h4, h5, h6, p, a {
+    &::selection {
+        background-color: #233a58;
+        color: #fff;
+    }
+}
+
+.form {
+
+    .form-control {
+        height: 50px;
+        line-height: 50px;
+        padding: .5rem 1.5rem;
+        border-radius: 2rem;
+        border: none;
+        background-color: #f8fbf5;
+        color: #233a48;
+        font-family: quicksand;
+
+        &::placeholder {
+            color: #233a48;
+        }
+
+        &:focus {
+            box-shadow: none;
+            border: none;
+        }
+    }
+
+    .btn-form {
+        padding: .75rem 5rem;
+        border-radius: 2rem;
+        background-color: #6c9585;
+        box-shadow: 0 10px 30px -10px #436e67;
+        color: #fff;
+        font-weight: 700;
+        transition: all .5s ease-out;
+
+        &:hover {
+            background-color: #6c9585;
+        }
+
+        &:focus {
+            box-shadow: 0 10px 30px -10px #436e67;
+        }
+    }
+
+}

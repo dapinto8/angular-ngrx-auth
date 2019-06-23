@@ -1,0 +1,21 @@
+<section class="auth-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-5 auth auth-sign" [ngClass]="{'move': move}">
+        <h4>{{ isSignIn ? 'Hello, Welcome to Gleep!' : 'Start journey with us' }}</h4>
+        <div class="mt-4 mb-5 text-center">
+            <p class="mb-0">Lorem ipsum dolor sit amet</p>
+            <p class="mb-0">Odit eveniet repellat nostrum</p>
+        </div>
+        <div class="btn-container">
+          <p>{{ isSignIn ? 'Don\'t have an account?' : 'Already have an account?' }}</p>
+          <button (click)="onClick()" class="btn btn-sign">{{ isSignIn ? 'Sign up' : 'Sign in' }}</button>
+        </div>
+      </div>
+      <div class="col-lg-7 auth auth-form" [ngClass]="{'move': move}">
+        <app-sign-in *ngIf="isSignIn"></app-sign-in>
+        <app-sign-up *ngIf="!isSignIn"></app-sign-up>
+      </div>
+    </div>
+  </div>
+</section>
