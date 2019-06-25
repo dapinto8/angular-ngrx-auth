@@ -14,7 +14,7 @@ export class SignIn implements Action {
 
 export class SignInSuccess implements Action {
     readonly type = AuthActionTypes.SIGN_IN_SUCCESS
-    constructor(public payload: User) { }
+    constructor(public payload: any) { }
 } 
 
 export class SignInFailure implements Action {

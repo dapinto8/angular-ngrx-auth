@@ -20,10 +20,7 @@ export class AuthService {
     }
 
     signIn(data) {
-        return this.http.post(`${this.env.apiUrl}/auth/signIn`, data).pipe(
-            map(res => res),
-            catchError(err => of(err))
-        )
+        return this.http.post(`${this.env.apiUrl}/auth/signIn`, data)
     }
 
 } 
