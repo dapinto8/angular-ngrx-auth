@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SignUpComponent implements OnInit {
 
   signUpForm: FormGroup
+  submitted = false
+  error = ''
 
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
@@ -24,9 +26,17 @@ export class SignUpComponent implements OnInit {
   get fc() { return this.signUpForm.controls }
 
   signUp() {
+    this.submitted = true
     if (this.signUpForm.valid) {
       this.authService.signUp(this.signUpForm.value).subscribe(res => {
-        console.log(res)
+        if (res.code === 200) {
+
+        } else {
+          this.error = res.error.error
+          setTimeout(() => {
+            this.error = ''
+          }, 5000)
+        }
       })
     }
     
