@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthState } from '../../store/auth.reducer';
 import { Store, select } from '@ngrx/store';
-import { SignIn, SignInFailure } from 'src/app/store/auth.actions';
-import { getErrorState } from 'src/app/store/auth.selector';
+import { SignIn, SignInFailure } from '../../store/auth.actions';
+import { getErrorState } from '../../store/auth.selector';
 
 @Component({
   selector: 'app-sign-in',

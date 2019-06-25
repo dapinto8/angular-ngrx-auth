@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AuthState } from '../../store/auth.reducer';
-import { getUserState } from 'src/app/store/auth.selector';
+import { getUserState } from '../../store/auth.selector';
 import { User } from '../../models/user.model';
 import { CookieService } from 'ngx-cookie-service';
 
