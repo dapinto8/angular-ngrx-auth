@@ -9,6 +9,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './store/app.state';
 import { AuthEffects } from './store/auth.effects';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,7 +43,10 @@ import { HomeComponent } from './components/home/home.component';
     HttpClientModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects]),
-    environment.production ? [] : StoreDevtoolsModule.instrument()
+    environment.production ? [] : StoreDevtoolsModule.instrument(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
   ],
   providers: [AuthService, AuthGuard, CookieService],
   bootstrap: [AppComponent]

@@ -1,26 +1,49 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
 @Injectable()
 
 export class AuthService {
 
-    env = environment
+  constructor(private afAuth: AngularFireAuth) { }
 
-    constructor(private http: HttpClient) { }
+  signUp(email, password) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      .then(result => result)
+      .catch(error => error)
+  }
 
-    signUp(data) {
-        return this.http.post(`${this.env.apiUrl}/auth/signUp`, data).pipe(
-            map(res => res),
-            catchError(err => of(err))
-        )
-    }
+  signIn(email, password) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      .then(result => result)
+      .catch(error => error)
+  }
 
-    signIn(data) {
-        return this.http.post(`${this.env.apiUrl}/auth/signIn`, data)
-    }
 
+  googleAuth() {
+    return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+      .then(result => result)
+      .catch(error => error)
+  }
+
+  facebookAuth() {
+    return this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
+      .then(result => result)
+      .catch(error => error)
+  }
+
+  signOut() {
+    return this.afAuth.auth.signOut()
+      .then(result => result)
+      .catch(error => error)
+  }
+
+  getAuthState() {
+    return this.afAuth.authState
+  }
+
+  getCurrentUser() {
+    return this.afAuth.auth.currentUser
+  }
 } 

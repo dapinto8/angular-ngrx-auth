@@ -25,21 +25,12 @@ export class SignUpComponent implements OnInit {
 
   get fc() { return this.signUpForm.controls }
 
-  signUp() {
+  signUp() { 
     this.submitted = true
     if (this.signUpForm.valid) {
-      this.authService.signUp(this.signUpForm.value).subscribe(res => {
-        if (res.code === 200) {
-
-        } else {
-          this.error = res.error.error
-          setTimeout(() => {
-            this.error = ''
-          }, 5000)
-        }
-      })
+      const { email, password } = this.signUpForm.value
+      console.log(this.authService.signUp(email, password).finally())
     }
-    
   }
 
 }

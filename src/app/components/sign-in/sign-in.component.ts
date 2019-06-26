@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthState } from '../../store/auth.reducer';
-import { Store, select } from '@ngrx/store';
-import { SignIn, SignInFailure } from '../../store/auth.actions';
-import { getErrorState } from '../../store/auth.selector';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,31 +13,21 @@ export class SignInComponent implements OnInit {
   submitted = false
   error = ''
 
-  constructor(private fb: FormBuilder, private store: Store<AuthState>) { }
+  constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit() {
     this.signInForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
-
-    this.store.pipe(select(getErrorState)).subscribe(error => {
-      this.error = error
-      if (error) {
-        this.signInForm.controls.password.setValue('')
-        setTimeout(() => {
-          this.store.dispatch(new SignInFailure(null))
-        }, 5000)
-      }
-    })
-
   }
 
   get fc() { return this.signInForm.controls }
 
   signIn() {
     if (this.signInForm.valid) {
-      this.store.dispatch(new SignIn(this.signInForm.value))
+      const { email, password } = this.signInForm.value
+      console.log(this.authService.signIn(email, password).finally())
     }
   }
 
