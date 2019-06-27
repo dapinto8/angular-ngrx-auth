@@ -1,7 +1,7 @@
 # Gleep Auth
 
 Authentication app with Angular+NgRx+Mongodb and Angular+Firebase
-### [Demo on stackblitz.com](https://gleep.stackblitz.io/)
+### [Demo on stackblitz.com](https://gleep-auth.stackblitz.io/auth)
 
 ## Getting Started
 
