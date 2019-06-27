@@ -1,42 +1,55 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
+import { Router } from '@angular/router';
 
 @Injectable()
 
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(
+    private afAuth: AngularFireAuth,
+    private fire: AngularFirestore,
+    private router: Router,
+    private ngZone: NgZone
+  ) { }
 
   signUp(email, password) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then(result => result)
-      .catch(error => error)
   }
 
   signIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(result => result)
-      .catch(error => error)
   }
-
 
   googleAuth() {
     return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
-      .then(result => result)
-      .catch(error => error)
+      .then(result => {
+        this.createUser(result.user)
+      })
+      .catch(error => {
+        console.log('googleAuthError', error)
+      })
   }
 
   facebookAuth() {
     return this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
-      .then(result => result)
-      .catch(error => error)
+      .then(result => {
+        this.createUser(result.user)
+      })
+      .catch(error => {
+        console.log('facebookAuthError', error)
+      })
   }
 
   signOut() {
     return this.afAuth.auth.signOut()
-      .then(result => result)
-      .catch(error => error)
+      .then(result => {
+        this.ngZone.run(() => {
+          this.router.navigate(['/auth'])
+        })
+      })
   }
 
   getAuthState() {
@@ -45,5 +58,19 @@ export class AuthService {
 
   getCurrentUser() {
     return this.afAuth.auth.currentUser
+  }
+
+  createUser(user) {
+    this.fire.doc(`users/${user.uid}`).set({
+      uid: user.uid,
+      name: user.displayName,
+      email: user.email,
+      phone: user.phoneNumber,
+      photo: user.photoURL
+    }).then(user => {
+      this.ngZone.run(() => {
+        this.router.navigate(['/home'])
+      })
+    })
   }
 } 

@@ -1,29 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { AuthState } from '../../store/auth.reducer';
-import { getUserState } from '../../store/auth.selector';
-import { User } from '../../models/user.model';
-import { CookieService } from 'ngx-cookie-service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
 
-  user: User
+  user: any
 
-  constructor(private store: Store<AuthState>, private cookieService: CookieService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.store.pipe(select(getUserState)).subscribe(user => {
-      this.user = user
+    this.authService.getAuthState().subscribe(authState => {
+      this.user = authState
     })
   }
 
-  ngOnDestroy() {
-    this.cookieService.delete('token')
+  signOut() {
+    this.authService.signOut()
   }
 
 }

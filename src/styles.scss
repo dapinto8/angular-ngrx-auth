@@ -59,5 +59,23 @@ h1, h2, h3, h4, h5, h6, p, a {
             box-shadow: 0 10px 30px -10px #436e67;
         }
     }
+}
 
+button:focus {
+    animation: clicked .2s linear;
+}
+
+@keyframes clicked {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(.9);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1)
+    }
 }

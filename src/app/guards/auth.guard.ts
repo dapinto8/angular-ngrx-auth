@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
     isAuthenticated = false
 
-    constructor(private router: Router, private cookieService: CookieService) { }
+    constructor(private router: Router, private authService: AuthService) { }
 
     canActivate() {
 
-        const tokenExists = this.cookieService.check('token')     
+        this.authService.getAuthState().subscribe(authState => {
+            if (authState) {
+                return true
+            } else {
+                this.router.navigate(['/auth'])
+                return false
+            }
+        })
 
-        if (tokenExists) {
-            return true
-        } else {
-            this.router.navigate(['/auth'])
-            return false
-        }
+        return true
         
     }
 }

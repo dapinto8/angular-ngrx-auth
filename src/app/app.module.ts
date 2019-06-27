@@ -3,12 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { environment } from '../environments/environment';
 
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { reducers } from './store/app.state';
-import { AuthEffects } from './store/auth.effects';
-
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -25,6 +19,7 @@ import { AuthContainerComponent } from './components/auth-container/auth-contain
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
+import { SocialAuthComponent } from './components/social-auth/social-auth.component';
 
 
 
@@ -34,16 +29,14 @@ import { HomeComponent } from './components/home/home.component';
     AuthContainerComponent,
     SignInComponent,
     SignUpComponent,
-    HomeComponent
+    HomeComponent,
+    SocialAuthComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects]),
-    environment.production ? [] : StoreDevtoolsModule.instrument(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,7 +14,11 @@ export class SignInComponent implements OnInit {
   submitted = false
   error = ''
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.signInForm = this.fb.group({
@@ -27,8 +32,19 @@ export class SignInComponent implements OnInit {
   signIn() {
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value
-      console.log(this.authService.signIn(email, password).finally())
+      this.authService.signIn(email, password)
+        .then(result => {
+          this.router.navigate(['/home'])
+        })
+        .catch(error => {
+          this.fc.password.setValue('')
+          this.error = 'Invalid email or password'
+        })
     }
+  }
+
+  onFocus() {
+    this.error = null
   }
 
 }
